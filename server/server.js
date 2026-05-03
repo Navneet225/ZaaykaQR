@@ -251,11 +251,12 @@ app.get('/api/admin/analytics', auth, async (req, res) => {
 app.post('/api/admin/login', (req, res) => {
   try {
     const { username, password } = req.body;
-    if (username !== (process.env.ADMIN_USERNAME || 'admin') ||
-        password !== (process.env.ADMIN_PASSWORD || 'admin123'))
+    if (username === 'admin' && password === 'admin123') {
+      const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET || 'zaayka_secret', { expiresIn: '24h' });
+      res.json({ token });
+    } else {
       return res.status(401).json({ message: 'Invalid credentials' });
-    const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET || 'zaayka_secret', { expiresIn: '24h' });
-    res.json({ token });
+    }
   } catch (e) { res.status(500).json({ message: e.message }); }
 });
 
