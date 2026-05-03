@@ -1,4 +1,4 @@
-# 🍽️ ZaaykaQR — Premium Digital Menu & Loyalty System
+# 🍽️ ZaaykaQR —  Digital Menu Ordering System
 
 ZaaykaQR is a professional, mobile-first QR-based ordering system designed specifically for the modern Indian food industry. It eliminates the need for physical menus and streamlines the ordering process with real-time synchronization between customers and the kitchen.
 
