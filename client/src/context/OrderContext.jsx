@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 
 const OrderContext = createContext();
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API = 'https://zaaykaqr-production.up.railway.app';
 
 export const OrderProvider = ({ children }) => {
   const [cart, setCart]               = useState(() => {
