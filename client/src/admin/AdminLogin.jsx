@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Lock, User, UtensilsCrossed } from 'lucide-react';
 
-const API = 'http://localhost:5000';
+const API = 'https://zaaykaqr-production.up.railway.app';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
