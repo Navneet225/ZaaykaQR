@@ -59,9 +59,7 @@ const calcETA = (items) => {
   if (maxPrep < 10) buffer = 5;
   else if (maxPrep <= 15) buffer = 10;
   
-  const eta = buffer + maxPrep + (totalQty > 1 ? (totalQty - 1) * 2 : 0);
-  console.log(`DEBUG: maxPrep=${maxPrep}, buffer=${buffer}, eta=${eta}`);
-  return eta;
+  return buffer + maxPrep + (totalQty > 1 ? (totalQty - 1) * 2 : 0);
 };
 const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 
