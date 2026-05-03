@@ -47,7 +47,29 @@ loadDemoUsers();
 
 // ─── DB ───────────────────────────────────────────────────────────────────────
 mongoose.connect(process.env.MONGODB_URI || '')
-  .then(() => console.log('✅ MongoDB connected'))
+  .then(async () => {
+    console.log('✅ MongoDB connected');
+    
+    // Auto-seed if database is empty
+    try {
+      const MenuItem = require('./models/MenuItem');
+      const count = await MenuItem.countDocuments();
+      if (count === 0) {
+        console.log('🌱 Database is empty. Seeding default menu...');
+        const seedItems = [
+          { name: 'Paneer Butter Masala', price: 220, category: 'North Indian', description: 'Rich and creamy paneer curry', prepTime: 25 },
+          { name: 'Butter Naan', price: 40, category: 'North Indian', description: 'Soft leavened bread with butter', prepTime: 12 },
+          { name: 'Masala Dosa', price: 90, category: 'South Indian', description: 'Crispy crepe with potato filling', prepTime: 15 },
+          { name: 'Veg Hakka Noodles', price: 120, category: 'Chinese', description: 'Stir fried noodles with veggies', prepTime: 20 },
+          { name: 'Tea', price: 20, category: 'Beverages', description: 'Hot masala chai', prepTime: 5 }
+        ];
+        await MenuItem.insertMany(seedItems);
+        console.log('✅ Auto-seed successful!');
+      }
+    } catch (err) {
+      console.error('❌ Auto-seed failed:', err);
+    }
+  })
   .catch(() => { console.log('⚠️  Demo Mode (no MongoDB)'); isDemoMode = true; });
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
