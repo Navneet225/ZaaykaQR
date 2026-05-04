@@ -67,7 +67,7 @@ export default function Home() {
       )}
 
       {/* Active Order tracking banner */}
-      {activeOrder && (
+      {activeOrder && String(activeOrder.table) === String(tableNumber) ? (
         <Link to={`/track/${activeOrder._id}`} style={{ textDecoration: 'none' }}>
           <div style={{
             background: 'linear-gradient(135deg, #FF4D4D, #E03E3E)',
@@ -98,7 +98,18 @@ export default function Home() {
             </div>
           </div>
         </Link>
-      )}
+      ) : tableNumber ? (
+        <div style={{
+          background: '#fff', borderRadius: 16, padding: '14px 16px',
+          marginBottom: 20, display: 'flex', alignItems: 'center', gap: 12,
+          border: '1px dashed #ddd'
+        }}>
+          <div style={{ fontSize: '1.2rem' }}>🕒</div>
+          <p style={{ fontSize: '0.85rem', color: 'var(--muted)', fontWeight: 500 }}>
+            Place an order to track it here in real-time
+          </p>
+        </div>
+      ) : null}
 
       {/* Table confirmed banner */}
       {tableNumber && (
