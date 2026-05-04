@@ -66,41 +66,61 @@ export default function Home() {
         </div>
       )}
 
-      {/* Table confirmed banner */}
-      {tableNumber && (
-        <div style={{
-          background: '#EAFAF1', borderRadius: 12, padding: '10px 16px',
-          marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          border: '1px solid #D5F5E3'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ background: 'var(--green)', width: 8, height: 8, borderRadius: '50%' }}></div>
-            <span style={{ fontWeight: 700, fontSize: '0.95rem', color: '#145A32' }}>Table {tableNumber}</span>
-          </div>
-          <button 
-            onClick={() => { setTableNumber(''); localStorage.removeItem('zaayka_table'); }}
-            style={{ background: 'none', border: 'none', color: 'var(--muted)', fontSize: '0.75rem', fontWeight: 600, textDecoration: 'underline', cursor: 'pointer' }}
-          >
-            Change
-          </button>
-        </div>
-      )}
-
       {/* Active Order tracking banner */}
       {activeOrder && (
         <Link to={`/track/${activeOrder._id}`} style={{ textDecoration: 'none' }}>
           <div style={{
-            background: 'var(--primary)', color: 'white', borderRadius: 10, padding: '10px 14px',
-            marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            boxShadow: '0 4px 12px rgba(255, 77, 77, 0.2)'
+            background: 'linear-gradient(135deg, #FF4D4D, #E03E3E)',
+            color: 'white', borderRadius: 16, padding: '16px',
+            marginBottom: 20, display: 'flex', alignItems: 'center', gap: 14,
+            boxShadow: '0 8px 24px rgba(255, 77, 77, 0.25)',
+            border: '1px solid rgba(255,255,255,0.1)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span>🛵</span>
-              <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Track Active Order</span>
+            <div style={{ 
+              background: 'rgba(255,255,255,0.2)', 
+              width: 48, height: 48, borderRadius: 12, 
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '1.5rem'
+            }}>
+              {activeOrder.status === 'Delivered' ? '✅' : '👨‍🍳'}
             </div>
-            <span style={{ fontSize: '0.8rem', opacity: 0.9 }}>Status: {activeOrder.status} →</span>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontWeight: 800, fontSize: '1rem', marginBottom: 2 }}>Current Order Status</p>
+              <p style={{ fontSize: '0.85rem', opacity: 0.9 }}>
+                {activeOrder.status === 'Received' && 'Order received by kitchen'}
+                {activeOrder.status === 'Preparing' && 'Chef is preparing your meal'}
+                {activeOrder.status === 'Ready' && 'Food is ready to serve!'}
+                {activeOrder.status === 'Delivered' && 'Order delivered. Enjoy!'}
+              </p>
+            </div>
+            <div style={{ background: 'rgba(255,255,255,0.2)', padding: '6px 10px', borderRadius: 20, fontSize: '0.75rem', fontWeight: 700 }}>
+              Track →
+            </div>
           </div>
         </Link>
+      )}
+
+      {/* Table confirmed banner */}
+      {tableNumber && (
+        <div style={{
+          background: '#fff', borderRadius: 12, padding: '12px 16px',
+          marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          border: '1px solid var(--border)', boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ background: '#27AE60', width: 10, height: 10, borderRadius: '50%', boxShadow: '0 0 0 4px rgba(39, 174, 96, 0.1)' }}></div>
+            <div>
+              <p style={{ fontWeight: 800, fontSize: '0.95rem', color: '#145A32' }}>Table {tableNumber}</p>
+              <p style={{ fontSize: '0.7rem', color: 'var(--muted)', marginTop: 1 }}>Digital Menu Active</p>
+            </div>
+          </div>
+          <button 
+            onClick={() => { setTableNumber(''); localStorage.removeItem('zaayka_table'); }}
+            style={{ background: '#f8f8f8', border: '1px solid #eee', padding: '6px 12px', borderRadius: 8, color: 'var(--muted)', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer' }}
+          >
+            Change
+          </button>
+        </div>
       )}
 
       {/* Categories */}

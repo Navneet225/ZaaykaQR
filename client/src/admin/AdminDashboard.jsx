@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import { QRCodeSVG } from 'qrcode.react';
 import { LogOut, BarChart2, QrCode, ClipboardList, Download, CheckCircle, IndianRupee, Banknote } from 'lucide-react';
 
-const API = 'https://zaaykaqr-production.up.railway.app';
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 function authHeader() {
   return { headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` } };
