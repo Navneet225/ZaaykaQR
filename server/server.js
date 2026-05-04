@@ -15,6 +15,10 @@ const io = new Server(server, { cors: { origin: '*', methods: ['GET','POST','PAT
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('ZaaykaQR API is running... 🚀');
+});
+
 // ─── DEMO STORE ───────────────────────────────────────────────────────────────
 const MENU = [
   { _id:'1',  name:'Paneer Butter Masala', price:220, category:'North Indian', description:'Rich & creamy paneer curry',   prepTime:25, isAvailable:true },

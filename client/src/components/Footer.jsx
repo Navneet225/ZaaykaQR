@@ -1,4 +1,4 @@
-import React from 'react';
+// Footer Component
 import { useNavigate } from 'react-router-dom';
 import { UserCog } from 'lucide-react';
 

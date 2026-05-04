@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { QRCodeSVG } from 'qrcode.react';
@@ -39,23 +39,23 @@ export default function OrderTracking() {
     axios.get(`${API}/api/config`)
       .then(r => { setVendorUpi(r.data.vendorUpi); setVendorName(r.data.vendorName); })
       .catch(() => {});
-  }, []);
+  }, [API]);
 
-  const fetchOrder = async () => {
+  const fetchOrder = useCallback(async () => {
     try {
       const { data } = await axios.get(`${API}/api/orders/${id}`);
       setOrder(data);
       setActiveOrder(data);
-    } catch {}
-  };
+    } catch (e) {
+      console.error('Fetch order failed', e);
+    }
+  }, [API, id, setActiveOrder]);
 
-  useEffect(() => { fetchOrder(); }, [id]);
-
-  // Poll every 5 s
-  useEffect(() => {
+  useEffect(() => { 
+    fetchOrder(); 
     const iv = setInterval(fetchOrder, 5000);
     return () => clearInterval(iv);
-  }, [id]);
+  }, [fetchOrder]);
 
   if (!order) return (
     <div className="text-center" style={{ padding:60, color:'var(--muted)' }}>

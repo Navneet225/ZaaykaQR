@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOrder } from '../context/OrderContext';
 import { Plus, Minus } from 'lucide-react';
 

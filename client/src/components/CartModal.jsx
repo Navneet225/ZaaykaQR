@@ -138,7 +138,7 @@ export default function CartModal() {
 
               {phone.length < 10 && totalAmount > 0 && (
                 <p style={{ fontSize:'0.8rem', color:'var(--green)', marginTop:4, display:'flex', alignItems:'center', gap:4 }}>
-                  <Gift size={13} /> You'll earn <strong>{Math.floor(totalAmount/10)} points</strong> on this order
+                  <Gift size={13} /> You&apos;ll earn <strong>{Math.floor(totalAmount/10)} points</strong> on this order
                 </p>
               )}
             </div>

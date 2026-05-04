@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Lock, User, UtensilsCrossed } from 'lucide-react';
@@ -19,7 +19,8 @@ export default function AdminLogin() {
       const { data } = await axios.post(`${API}/api/admin/login`, { username, password });
       localStorage.setItem('adminToken', data.token);
       navigate('/admin/dashboard');
-    } catch (e) {
+    } catch (err) {
+      console.error('Login failed', err);
       setError('Invalid credentials. Try admin / admin123');
     } finally { setLoading(false); }
   };

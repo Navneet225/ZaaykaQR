@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function CategoryBar({ categories, active, onSelect }) {
   return (
     <div className="cats">

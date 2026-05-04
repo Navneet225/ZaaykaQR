@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
 import { QRCodeSVG } from 'qrcode.react';
-import { LogOut, BarChart2, QrCode, ClipboardList, Download, CheckCircle, IndianRupee, Banknote } from 'lucide-react';
+import { LogOut, BarChart2, QrCode, ClipboardList, Download, CheckCircle, Banknote } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -16,28 +16,26 @@ export default function AdminDashboard() {
   const [orders,    setOrders]    = useState([]);
   const [analytics, setAnalytics] = useState({ totalOrders:0, totalRevenue:0, upiRevenue:0, cashRevenue:0, pendingRevenue:0 });
   const navigate = useNavigate();
+  const logout = useCallback(() => { localStorage.removeItem('adminToken'); navigate('/admin/login'); }, [navigate]);
+  const fetchOrders    = useCallback(async () => { try { const { data } = await axios.get(`${API}/api/admin/orders`, authHeader()); setOrders(data); } catch { logout(); } }, [logout]);
+  const fetchAnalytics = useCallback(async () => { try { const { data } = await axios.get(`${API}/api/admin/analytics`, authHeader()); setAnalytics(data); } catch (e) { console.error('Analytics fetch failed', e); } }, []);
 
   useEffect(() => {
     if (!localStorage.getItem('adminToken')) navigate('/admin/login');
-  }, []);
+  }, [navigate]);
 
-  const fetchOrders    = async () => { try { const { data } = await axios.get(`${API}/api/admin/orders`, authHeader()); setOrders(data); } catch { logout(); } };
-  const fetchAnalytics = async () => { try { const { data } = await axios.get(`${API}/api/admin/analytics`, authHeader()); setAnalytics(data); } catch {} };
-
-  useEffect(() => { fetchOrders(); fetchAnalytics(); }, []);
+  useEffect(() => { fetchOrders(); fetchAnalytics(); }, [fetchOrders, fetchAnalytics]);
 
   useEffect(() => {
     const socket = io(API, { transports: ['websocket','polling'] });
     socket.on('newOrder',    () => { fetchOrders(); fetchAnalytics(); });
     socket.on('orderUpdate', () => { fetchOrders(); fetchAnalytics(); });
     return () => socket.disconnect();
-  }, []);
+  }, [fetchOrders, fetchAnalytics]);
 
   const updateOrder = async (id, patch) => {
-    try { await axios.patch(`${API}/api/orders/${id}`, patch, authHeader()); fetchOrders(); fetchAnalytics(); } catch {}
+    try { await axios.patch(`${API}/api/orders/${id}`, patch, authHeader()); fetchOrders(); fetchAnalytics(); } catch (e) { console.error('Order update failed', e); }
   };
-
-  const logout = () => { localStorage.removeItem('adminToken'); navigate('/admin/login'); };
 
   const TABS = [
     { key:'orders',    label:'Orders',    icon:<ClipboardList size={15}/> },

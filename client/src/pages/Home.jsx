@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { QrCode } from 'lucide-react';
@@ -20,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     const t = searchParams.get('table');
     if (t) setTableNumber(t);
-  }, [searchParams]);
+  }, [searchParams, setTableNumber]);
 
   // Fetch menu
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function Home() {
       .then(r => setMenu(r.data))
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  }, [API]);
 
   const filtered = category === 'All' ? menu : menu.filter(i => i.category === category);
 

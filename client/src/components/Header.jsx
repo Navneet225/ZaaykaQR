@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ShoppingCart, UtensilsCrossed } from 'lucide-react';
 import { useOrder } from '../context/OrderContext';
 

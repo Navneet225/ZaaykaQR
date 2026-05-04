@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Download, Printer } from 'lucide-react';
 
 const QRGenerator = () => {
   const [table, setTable] = useState('1');
-  const [size, setSize] = useState(200);
 
   const baseUrl = window.location.origin;
   const qrUrl = `${baseUrl}/menu?table=${table}`;
@@ -84,7 +83,7 @@ const QRGenerator = () => {
         <QRCodeSVG 
           id="table-qr"
           value={qrUrl} 
-          size={size}
+          size={200}
           level="H"
           includeMargin={true}
           imageSettings={{
